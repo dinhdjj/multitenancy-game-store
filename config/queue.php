@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'redis'),
+    'default' => env('QUEUE_CONNECTION', 'sync'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,13 +34,23 @@ return [
             'driver' => 'sync',
         ],
 
-        'redis' => [
+        'tenant' => [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
             'retry_after' => 90,
             'block_for' => 5,
             'after_commit' => false,
+        ],
+
+        'central' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => env('REDIS_QUEUE', 'default'),
+            'retry_after' => 90,
+            'block_for' => 5,
+            'after_commit' => false,
+            'central' => true, // https://tenancyforlaravel.com/docs/v3/queues
         ],
     ],
 

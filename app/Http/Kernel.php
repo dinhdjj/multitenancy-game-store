@@ -45,6 +45,22 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        /**
+         * Make routes only access by tenants.
+         */
+        'tenant' => [
+            \Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain::class,
+            \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
+        ],
+
+        /**
+         * Make routes can access by both tenants and central.
+         * More infos: https://tenancyforlaravel.com/docs/v3/features/universal-routes/#universal-routes.
+         */
+        'universal' => [
+            \Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain::class,
+        ],
     ];
 
     /**
